@@ -8,7 +8,9 @@ import "dotenv/config";
 import { EtherscanAPIKey, GoerliRPCUrl, PrivateKey } from "./utils/env";
 
 const config: HardhatUserConfig = {
-    solidity: "0.8.18",
+    solidity: {
+        compilers: [{ version: "0.8.18" }]
+    },
     networks: {
         goerli: {
             url: GoerliRPCUrl,
