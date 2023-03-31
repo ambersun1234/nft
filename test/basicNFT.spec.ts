@@ -1,7 +1,6 @@
 import { ethers, deployments } from "hardhat";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { assert, expect } from "chai";
-import { BigNumber } from "ethers";
 
 import { BasicNFT } from "./../typechain-types/contracts/BasicNFT";
 
@@ -65,5 +64,9 @@ describe("BasicNFT", () => {
             await receipt.wait(1);
             assert.equal(receipt.value.toString(), "0");
         });
+
+        it("Should emit transfer event", async () => {
+            await expect(nft.mint()).to.emit(nft, "Transfer")
+        })
     });
 });
