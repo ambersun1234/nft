@@ -1,5 +1,5 @@
-import { verify } from "./../utils/verify";
-import { ChainMapping, DevelopmentChains } from "./../helper-hardhat.config";
+import { verify } from "../utils/verify";
+import { ChainMapping, DevelopmentChains } from "../helper-hardhat.config";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/dist/types";
 
