@@ -31,10 +31,10 @@ describe("BasicNFT", () => {
 
     describe("mint", () => {
         it("Should mint the first token", async () => {
-            const txReceipt = await nft.mint();
-            const txResponse = await txReceipt.wait(1);
+            const txResponse = await nft.mint();
+            const txReceipt = await txResponse.wait(1);
             assert.equal(
-                parseInt(txResponse.logs[0].topics[3]).toString(),
+                parseInt(txReceipt.logs[0].topics[3]).toString(),
                 "0"
             );
             assert.equal((await nft.getTokenCounter()).toString(), "1");
@@ -42,10 +42,10 @@ describe("BasicNFT", () => {
 
         it("Should mint n token", async () => {
             for (let i = 0; i < 10; i++) {
-                const receipt = await nft.mint();
-                const response = await receipt.wait(1);
+                const response = await nft.mint();
+                const receipt = await response.wait(1);
                 assert.equal(
-                    parseInt(response.logs[0].topics[3]).toString(),
+                    parseInt(receipt.logs[0].topics[3]).toString(),
                     i.toString()
                 );
                 assert.equal(
