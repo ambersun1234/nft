@@ -24,7 +24,7 @@ contract IpfsNFT is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
     mapping(uint256 => address) private requestID2Address;
     string[] private nftURIArr;
 
-    event MintRequested();
+    event MintRequested(uint256 indexed requestID);
     event NFTSend(uint256 indexed tokenID);
 
     constructor(
@@ -48,7 +48,9 @@ contract IpfsNFT is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
     }
 
     function withdraw() public payable onlyOwner {
-        (bool success,) = payable(msg.sender).call{value: address(this).balance}("");
+        (bool success, ) = payable(msg.sender).call{
+            value: address(this).balance
+        }("");
         if (!success) {
             revert IpfsNFT__TransferFailed();
         }
@@ -57,21 +59,16 @@ contract IpfsNFT is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
     function requestMint() public payable {
         require(msg.value >= mintFee);
 
-        uint256 requestID = requireRandomWords();
+        uint256 requestID = vrfCoordinator.requestRandomWords(
+            gasLane,
+            subscriptionID,
+            blockConfirmation,
+            gasLimits,
+            words
+        );
         requestID2Address[requestID] = msg.sender;
 
-        emit MintRequested();
-    }
-
-    function requireRandomWords() internal returns (uint256) {
-        return
-            vrfCoordinator.requestRandomWords(
-                gasLane,
-                subscriptionID,
-                blockConfirmation,
-                gasLimits,
-                words
-            );
+        emit MintRequested(requestID);
     }
 
     function fulfillRandomWords(

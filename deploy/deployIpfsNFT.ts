@@ -21,6 +21,8 @@ const deployIpfsNFT: DeployFunction = async (
 
     let vrfCoordinatorAddress: string = "";
     let subscriptionID: number = 0;
+    let nftAmount: number = 1;
+    let nftTokenURIArr: string[] = ["abc"];
 
     if (DevelopmentChains.includes(ChainMapping[chainID])) {
         const vrfCoordinator = await ethers.getContract("VRFCoordinatorV2Mock");
@@ -30,7 +32,7 @@ const deployIpfsNFT: DeployFunction = async (
         vrfCoordinatorAddress = vrfCoordinator.address;
         subscriptionID = receipt.events[0].args.subId;
 
-        vrfCoordinator.fundSubscription(
+        await vrfCoordinator.fundSubscription(
             subscriptionID,
             "1000000000000000000000"
         );
@@ -42,8 +44,8 @@ const deployIpfsNFT: DeployFunction = async (
         subscriptionID,
         networkCfg.gasLimit,
         networkCfg.mintFee,
-        2,
-        ["abc", "def"]
+        nftAmount,
+        nftTokenURIArr
     ];
 
     const nft = await deploy("IpfsNFT", {
