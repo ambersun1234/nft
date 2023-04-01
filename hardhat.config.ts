@@ -15,7 +15,8 @@ const config: HardhatUserConfig = {
         goerli: {
             url: GoerliRPCUrl,
             accounts: [PrivateKey],
-            chainId: 5
+            chainId: 5,
+            gasPrice: 15 * 1000000000
         }
     },
     namedAccounts: {

@@ -21,8 +21,12 @@ const deployIpfsNFT: DeployFunction = async (
 
     let vrfCoordinatorAddress: string = "";
     let subscriptionID: number = 0;
-    let nftAmount: number = 1;
-    let nftTokenURIArr: string[] = ["abc"];
+    let nftAmount: number = 3;
+    let nftTokenURIArr: string[] = [
+        "ipfs://QmaVkBn2tKmjbhphU7eyztbvSQU5EXDdqRyXZtRhSGgJGo",
+        "ipfs://QmYQC5aGZu2PTH8XzbJrbDnvhj3gVs7ya33H9mqUNvST3d",
+        "ipfs://QmZYmH5iDbD6v3U2ixoVAjioSzvWJszDzYdbeCLquGSpVm"
+    ];
 
     if (DevelopmentChains.includes(ChainMapping[chainID])) {
         const vrfCoordinator = await ethers.getContract("VRFCoordinatorV2Mock");
@@ -36,6 +40,9 @@ const deployIpfsNFT: DeployFunction = async (
             subscriptionID,
             "1000000000000000000000"
         );
+    } else {
+        vrfCoordinatorAddress = networkCfg.vrfCoordinatorAddress!
+        subscriptionID = networkCfg.subscriptionID
     }
 
     const args: any[] = [
