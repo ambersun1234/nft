@@ -16,5 +16,3 @@ jobs:
 
     - name: Unit test
       uses: ambersun1234/hardhat-test@v1
-      with:
-       network: 'hardhat'
