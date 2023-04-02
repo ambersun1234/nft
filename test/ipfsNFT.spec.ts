@@ -43,7 +43,7 @@ import { IpfsNFT } from "../typechain-types";
               });
 
               it("Should have same nft amount", async () => {
-                  assert.equal((await nft.nftAmount()).toString(), "1");
+                  assert.equal((await nft.nftAmount()).toString(), "3");
               });
           });
 
