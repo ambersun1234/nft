@@ -1,4 +1,6 @@
 # NFT
+![](https://github.com/ambersun1234/nft/actions/workflows/unitTest.yaml/badge.svg)
+
 This project contains the practice of NFT
 
 ## Install
