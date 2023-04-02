@@ -13,8 +13,8 @@ const config: HardhatUserConfig = {
     },
     networks: {
         goerli: {
-            url: GoerliRPCUrl,
-            accounts: [PrivateKey],
+            url: GoerliRPCUrl || "",
+            accounts: [PrivateKey || ""],
             chainId: 5,
             gasPrice: 15 * 1000000000
         }
