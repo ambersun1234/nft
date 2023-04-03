@@ -57,7 +57,7 @@ contract IpfsNFT is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
     }
 
     function requestMint() public payable {
-        require(msg.value >= mintFee);
+        require(msg.value >= mintFee, "Not enough ETH");
 
         uint256 requestID = vrfCoordinator.requestRandomWords(
             gasLane,
