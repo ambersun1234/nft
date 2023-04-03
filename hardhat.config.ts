@@ -5,7 +5,12 @@ import "hardhat-deploy";
 import "@nomicfoundation/hardhat-toolbox";
 import "dotenv/config";
 
-import { EtherscanAPIKey, GoerliRPCUrl, PrivateKey } from "./utils/env";
+import {
+    EtherscanAPIKey,
+    GoerliRPCUrl,
+    PrivateKey,
+    SepoliaRPCUrl
+} from "./utils/env";
 
 const config: HardhatUserConfig = {
     solidity: {
@@ -16,7 +21,13 @@ const config: HardhatUserConfig = {
             url: GoerliRPCUrl || "",
             accounts: [PrivateKey],
             chainId: 5,
-            gasPrice: 15 * 1000000000
+            gasPrice: 200 * 1000000000
+        },
+        sepolia: {
+            url: SepoliaRPCUrl || "",
+            accounts: [PrivateKey],
+            chainId: 11155111,
+            gasPrice: 30 * 1000000000
         }
     },
     namedAccounts: {
