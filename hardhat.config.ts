@@ -4,6 +4,7 @@ import "hardhat-gas-reporter";
 import "hardhat-deploy";
 import "@nomicfoundation/hardhat-toolbox";
 import "dotenv/config";
+import "hardhat-contract-sizer";
 
 import {
     EtherscanAPIKey,
@@ -39,7 +40,8 @@ const config: HardhatUserConfig = {
         apiKey: EtherscanAPIKey
     },
     mocha: {
-        bail: true
+        bail: true,
+        timeout: 300000
     }
 };
 
