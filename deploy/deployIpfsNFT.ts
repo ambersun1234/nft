@@ -59,7 +59,7 @@ const deployIpfsNFT: DeployFunction = async (
         from: deployer,
         args: args,
         log: true,
-        waitConfirmations: 1
+        waitConfirmations: networkCfg.blockConfirmation
     });
 
     if (

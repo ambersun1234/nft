@@ -1,5 +1,9 @@
 import { verify } from "../utils/verify";
-import { ChainMapping, DevelopmentChains } from "../helper-hardhat.config";
+import {
+    ChainMapping,
+    DevelopmentChains,
+    NetworkConfig
+} from "../helper-hardhat.config";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/dist/types";
 
@@ -10,12 +14,13 @@ const deployBasicNFT: DeployFunction = async (
     const { deploy } = deployments;
     const { deployer } = await getNamedAccounts();
     const chainID = network.config.chainId!;
+    const networkCfg = NetworkConfig[chainID];
 
     const nft = await deploy("BasicNFT", {
         from: deployer,
         args: [],
         log: true,
-        waitConfirmations: 1
+        waitConfirmations: networkCfg.blockConfirmation
     });
 
     if (!DevelopmentChains.includes(ChainMapping[chainID])) {
