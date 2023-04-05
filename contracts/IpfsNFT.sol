@@ -18,8 +18,8 @@ contract IpfsNFT is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
     uint16 private constant blockConfirmation = 3;
     uint32 private constant words = 1;
 
+    uint256 public immutable mintFee;
     uint256 public tokenID;
-    uint256 public mintFee;
     uint256 public nftAmount;
     mapping(uint256 => address) private requestID2Address;
     string[] private nftURIArr;

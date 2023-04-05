@@ -1,5 +1,6 @@
 # NFT
 ![](https://github.com/ambersun1234/nft/actions/workflows/unitTest.yaml/badge.svg)
+![](https://github.com/ambersun1234/nft/actions/workflows/integrationTest.yaml/badge.svg)
 
 This project contains the practice of NFT
 

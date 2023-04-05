@@ -22,13 +22,13 @@ const config: HardhatUserConfig = {
             url: GoerliRPCUrl || "",
             accounts: [PrivateKey],
             chainId: 5,
-            gasPrice: 200 * 1000000000
+            gasPrice: 300 * 1000000000
         },
         sepolia: {
             url: SepoliaRPCUrl || "",
             accounts: [PrivateKey],
             chainId: 11155111,
-            gasPrice: 30 * 1000000000
+            gasPrice: 5 * 1000000000
         }
     },
     namedAccounts: {
@@ -42,6 +42,10 @@ const config: HardhatUserConfig = {
     mocha: {
         bail: true,
         timeout: 300000
+    },
+    gasReporter: {
+        enabled: true,
+        currency: "USD"
     }
 };
 

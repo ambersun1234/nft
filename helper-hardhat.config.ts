@@ -37,12 +37,13 @@ export const NetworkConfig: NetworkConfigInterface = {
         blockConfirmation: 10
     },
     11155111: {
-        subscriptionID: 923,
+        subscriptionID: 1010,
         mintFee: ethers.utils.parseEther("0.001"),
-        gasLane: "0x474e34a077df58807dbe9c96d3c009b23b3c6d0cce433e59bbf5b34f823bc56c",
+        gasLane:
+            "0x474e34a077df58807dbe9c96d3c009b23b3c6d0cce433e59bbf5b34f823bc56c",
         gasLimit: 500000,
-        vrfCoordinatorAddress: "0x01f56A0BF45eD47f884e2Bcd7C3782c12378c17E",
-        blockConfirmation: 10,
+        vrfCoordinatorAddress: "0x8103B0A8A00be2DDC778e6e7eaa21791Cd364625",
+        blockConfirmation: 10
     }
 };
 

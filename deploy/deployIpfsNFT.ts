@@ -10,6 +10,12 @@ import {
 import { EtherscanAPIKey } from "./../utils/env";
 import { verify } from "../utils/verify";
 
+export const nftTokenURIArr: string[] = [
+    "ipfs://QmaVkBn2tKmjbhphU7eyztbvSQU5EXDdqRyXZtRhSGgJGo",
+    "ipfs://QmYQC5aGZu2PTH8XzbJrbDnvhj3gVs7ya33H9mqUNvST3d",
+    "ipfs://QmZYmH5iDbD6v3U2ixoVAjioSzvWJszDzYdbeCLquGSpVm"
+];
+
 const deployIpfsNFT: DeployFunction = async (
     hre: HardhatRuntimeEnvironment
 ) => {
@@ -21,12 +27,6 @@ const deployIpfsNFT: DeployFunction = async (
 
     let vrfCoordinatorAddress: string = "";
     let subscriptionID: number = 0;
-    let nftAmount: number = 3;
-    let nftTokenURIArr: string[] = [
-        "ipfs://QmaVkBn2tKmjbhphU7eyztbvSQU5EXDdqRyXZtRhSGgJGo",
-        "ipfs://QmYQC5aGZu2PTH8XzbJrbDnvhj3gVs7ya33H9mqUNvST3d",
-        "ipfs://QmZYmH5iDbD6v3U2ixoVAjioSzvWJszDzYdbeCLquGSpVm"
-    ];
 
     if (DevelopmentChains.includes(ChainMapping[chainID])) {
         const vrfCoordinator = await ethers.getContract("VRFCoordinatorV2Mock");
@@ -41,8 +41,8 @@ const deployIpfsNFT: DeployFunction = async (
             "1000000000000000000000"
         );
     } else {
-        vrfCoordinatorAddress = networkCfg.vrfCoordinatorAddress!
-        subscriptionID = networkCfg.subscriptionID
+        vrfCoordinatorAddress = networkCfg.vrfCoordinatorAddress!;
+        subscriptionID = networkCfg.subscriptionID;
     }
 
     const args: any[] = [
@@ -51,9 +51,11 @@ const deployIpfsNFT: DeployFunction = async (
         subscriptionID,
         networkCfg.gasLimit,
         networkCfg.mintFee,
-        nftAmount,
+        nftTokenURIArr.length,
         nftTokenURIArr
     ];
+    console.log(`deploying to ${ChainMapping[chainID]}(${chainID})...`);
+    console.log(`deploying with argument ${args}`);
 
     const nft = await deploy("IpfsNFT", {
         from: deployer,
