@@ -2,13 +2,10 @@ import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/dist/types";
 import { ethers } from "hardhat";
 
-import {
-    DevelopmentChains,
-    ChainMapping,
-    NetworkConfig
-} from "./../helper-hardhat.config";
+import { ChainMapping, NetworkConfig } from "./../helper-hardhat.config";
 import { EtherscanAPIKey } from "./../utils/env";
 import { verify } from "../utils/verify";
+import { isDevelopChain } from "../utils/utils";
 
 export const nftTokenURIArr: string[] = [
     "ipfs://QmaVkBn2tKmjbhphU7eyztbvSQU5EXDdqRyXZtRhSGgJGo",
@@ -28,7 +25,7 @@ const deployIpfsNFT: DeployFunction = async (
     let vrfCoordinatorAddress: string = "";
     let subscriptionID: number = 0;
 
-    if (DevelopmentChains.includes(ChainMapping[chainID])) {
+    if (isDevelopChain(chainID)) {
         const vrfCoordinator = await ethers.getContract("VRFCoordinatorV2Mock");
         const response = await vrfCoordinator.createSubscription();
         const receipt = await response.wait(1);
@@ -54,8 +51,11 @@ const deployIpfsNFT: DeployFunction = async (
         nftTokenURIArr.length,
         nftTokenURIArr
     ];
-    console.log(`deploying to ${ChainMapping[chainID]}(${chainID})...`);
-    console.log(`deploying with argument ${args}`);
+
+    if (!isDevelopChain(chainID)) {
+        console.log(`deploying to ${ChainMapping[chainID]}(${chainID})...`);
+        console.log(`deploying with argument ${args}`);
+    }
 
     const nft = await deploy("IpfsNFT", {
         from: deployer,
@@ -64,10 +64,7 @@ const deployIpfsNFT: DeployFunction = async (
         waitConfirmations: networkCfg.blockConfirmation
     });
 
-    if (
-        !DevelopmentChains.includes(ChainMapping[chainID]) &&
-        EtherscanAPIKey !== ""
-    ) {
+    if (!isDevelopChain(chainID) && EtherscanAPIKey !== "") {
         await verify(nft.address, args);
     }
 };
