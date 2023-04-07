@@ -12,6 +12,7 @@ export interface NetworkConfigItemInterface {
     gasLimit: number;
     blockConfirmation: number;
     vrfCoordinatorAddress?: string;
+    aggregatorAddress?: string;
 }
 
 export interface NetworkConfigInterface {
@@ -33,8 +34,9 @@ export const NetworkConfig: NetworkConfigInterface = {
         gasLane:
             "0x79d3d8832d904592c0bf9818b621522c988bb8b0c05cdc3b15aea1b6e8db0c15",
         gasLimit: 500000,
+        blockConfirmation: 10,
         vrfCoordinatorAddress: "0x2Ca8E0C643bDe4C2E08ab1fA0da3401AdAD7734D",
-        blockConfirmation: 10
+        aggregatorAddress: "0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e"
     },
     11155111: {
         subscriptionID: 1010,
@@ -42,8 +44,9 @@ export const NetworkConfig: NetworkConfigInterface = {
         gasLane:
             "0x474e34a077df58807dbe9c96d3c009b23b3c6d0cce433e59bbf5b34f823bc56c",
         gasLimit: 500000,
+        blockConfirmation: 10,
         vrfCoordinatorAddress: "0x8103B0A8A00be2DDC778e6e7eaa21791Cd364625",
-        blockConfirmation: 10
+        aggregatorAddress: "0x694AA1769357215DE4FAC081bf1f309aDC325306"
     }
 };
 

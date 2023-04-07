@@ -15,7 +15,7 @@ import {
 
 const config: HardhatUserConfig = {
     solidity: {
-        compilers: [{ version: "0.8.18" }]
+        compilers: [{ version: "0.8.18" }, {version: "0.6.6"}]
     },
     networks: {
         goerli: {
