@@ -16,7 +16,15 @@ const deployVrfCoordinatorV2Mock: DeployFunction = async (
         await deploy("VRFCoordinatorV2Mock", {
             from: deployer,
             args: [ethers.utils.parseEther("0.25"), 1e9],
-            log: true
+            log: true,
+            waitConfirmations: 1
+        });
+
+        await deploy("MockV3Aggregator", {
+            from: deployer,
+            args: [18, 2000 * 1e8],
+            log: true,
+            waitConfirmations: 1
         });
     }
 };
