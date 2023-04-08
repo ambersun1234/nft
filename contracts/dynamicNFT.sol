@@ -69,8 +69,8 @@ contract DynamicNFT is ERC721 {
                                 '{"name":"',
                                 name(),
                                 '"',
-                                '"description": "A NFT that will change based on input", ',
-                                '"attributes": [{"trait_type": "coolness", "value": 100}], ',
+                                '"description":"A NFT that will change based on input",',
+                                '"attributes":[{"trait_type":"coolness","value":100}],',
                                 '"image":"',
                                 getImageURI(),
                                 '"}'

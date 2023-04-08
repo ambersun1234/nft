@@ -6,6 +6,8 @@ import { isDevelopChain, readSVGs } from "../utils/utils";
 import { ChainMapping, NetworkConfig } from "../helper-hardhat.config";
 import { verify } from "../utils/verify";
 
+export const svgDefinitionArr = readSVGs("./images/dynamic")
+
 const deployDynamicNFT: DeployFunction = async (
     hre: HardhatRuntimeEnvironment
 ) => {
@@ -27,7 +29,7 @@ const deployDynamicNFT: DeployFunction = async (
         aggregatorAddress = networkCfg.aggregatorAddress!;
     }
 
-    const args: any[] = [aggregatorAddress, readSVGs("./images/dynamic")];
+    const args: any[] = [aggregatorAddress, svgDefinitionArr];
 
     if (!isDevelopChain(chainID)) {
         console.log(`deploying to ${ChainMapping[chainID]}(${chainID})...`);
