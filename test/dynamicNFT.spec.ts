@@ -27,7 +27,7 @@ import { svgDefinitionArr } from "../deploy/deployDynamicNFT";
           beforeEach(async () => {
               await deployments.fixture(["mock", "dynamic"]);
 
-              deployer = (await getNamedAccounts())[0];
+              deployer = (await getNamedAccounts())["deployer"];
               nft = await ethers.getContract("DynamicNFT", deployer);
               mockAggregator = await ethers.getContract(
                   "MockV3Aggregator",
