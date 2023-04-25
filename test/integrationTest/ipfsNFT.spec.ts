@@ -49,7 +49,7 @@ DevelopmentChains.includes(ChainMapping[network.config.chainId!])
                       try {
                           nft.once(nftSendEvent, () => resolve());
                       } catch (error) {
-                          reject();
+                          reject(error);
                       }
 
                       await nft.requestMint({
@@ -62,17 +62,18 @@ DevelopmentChains.includes(ChainMapping[network.config.chainId!])
                   const previousTokenID = await nft.tokenID();
 
                   await new Promise<void>(async (resolve, reject) => {
-                      try {
-                          nft.once(nftSendEvent, async () => {
+                      nft.once(nftSendEvent, async () => {
+                          try {
+                              const newTokenID = await nft.tokenID();
                               assert.equal(
-                                  (await nft.tokenID()).toString(),
-                                  previousTokenID.toString()
+                                  newTokenID.toString(),
+                                  previousTokenID.add(1).toString()
                               );
                               resolve();
-                          });
-                      } catch (error) {
-                          reject();
-                      }
+                          } catch (error) {
+                              reject(error);
+                          }
+                      });
 
                       await nft.requestMint({
                           value: networkCfg.mintFee
@@ -82,18 +83,22 @@ DevelopmentChains.includes(ChainMapping[network.config.chainId!])
 
               it("Should set token uri of given tokenID", async () => {
                   await new Promise<void>(async (resolve, reject) => {
-                      try {
-                          nft.once(nftSendEvent, async () => {
-                              const newTokenID = await nft.tokenID();
-                              const tokenID = newTokenID.sub(1);
+                      nft.once(nftSendEvent, async () => {
+                          try {
+                              let tokenID = await nft.tokenID();
+                              tokenID = tokenID
+                                  .sub(1)
+                                  .mod(nftTokenURIArr.length);
 
                               const tokenURI = await nft.tokenURI(tokenID);
-                              expect(tokenURI).to.be.includes(nftTokenURIArr);
+                              expect(nftTokenURIArr).to.include.members([
+                                  tokenURI
+                              ]);
                               resolve();
-                          });
-                      } catch (error) {
-                          reject();
-                      }
+                          } catch (error) {
+                              reject(error);
+                          }
+                      });
 
                       await nft.requestMint({
                           value: networkCfg.mintFee

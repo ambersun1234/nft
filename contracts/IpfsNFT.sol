@@ -75,8 +75,8 @@ contract IpfsNFT is VRFConsumerBaseV2, ERC721URIStorage, Ownable {
         uint256 requestId,
         uint256[] memory randomWords
     ) internal override {
-        _setTokenURI(tokenID, nftURIArr[randomWords[0] % nftAmount]);
         _safeMint(requestID2Address[requestId], tokenID);
+        _setTokenURI(tokenID, nftURIArr[randomWords[0] % nftAmount]);
         emit NFTSend(tokenID);
         tokenID += 1;
     }

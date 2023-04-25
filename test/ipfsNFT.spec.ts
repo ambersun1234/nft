@@ -1,4 +1,4 @@
-import { BigNumber, ContractTransaction } from "ethers";
+import { ContractTransaction } from "ethers";
 import { VRFCoordinatorV2Mock } from "./../typechain-types/@chainlink/contracts/src/v0.8/mocks/VRFCoordinatorV2Mock";
 import { assert, expect } from "chai";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
@@ -10,10 +10,12 @@ import {
     NetworkConfig
 } from "./../helper-hardhat.config";
 import { IpfsNFT } from "../typechain-types";
+import { nftTokenURIArr } from "../deploy/deployIpfsNFT";
 
 !DevelopmentChains.includes(ChainMapping[network.config.chainId!])
     ? describe.skip
     : describe("ipfsNFT", () => {
+          const nftSendEvent = "NFTSend";
           const networkCfg = NetworkConfig[network.config.chainId!];
 
           let nft: IpfsNFT;
@@ -171,6 +173,34 @@ import { IpfsNFT } from "../typechain-types";
                   await expect(
                       nft.requestMint({ value: networkCfg.mintFee })
                   ).to.be.emit(nft, "MintRequested");
+              });
+
+              it("Should increase token id counter after successful mint", async () => {
+                  const oldID = await nft.tokenID();
+
+                  await new Promise<void>(async (resolve, reject) => {
+                      nft.once(nftSendEvent, async () => {
+                          try {
+                              const newID = await nft.tokenID();
+                              expect(newID.toString()).to.be.eq(
+                                  oldID.add(1).toString()
+                              );
+                              resolve();
+                          } catch (err) {
+                              reject(err);
+                          }
+                      });
+
+                      const response = await nft.requestMint({
+                          value: networkCfg.mintFee
+                      });
+                      const receipt = await response.wait(1);
+                      const requestID = receipt.events![1].args!.requestID;
+                      await vrfCoordinator.fulfillRandomWords(
+                          requestID,
+                          nft.address
+                      );
+                  });
               });
           });
       });
