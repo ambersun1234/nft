@@ -15,7 +15,7 @@ jobs:
         node-version: 18.15.0
 
     - name: Integration test
-      uses: ambersun1234/hardhat-test@v1
+      uses: ambersun1234/hardhat-test-action@v1
       with:
        network: sepolia
        private_key: ${{ secrets.PRIVATE_KEY }}
